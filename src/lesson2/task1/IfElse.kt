@@ -132,7 +132,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         else -> (-1)
     }
 }
- 
+
 /**
  * Средняя
  *
@@ -144,8 +144,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
     b < c -> (-1)
     a > d -> (-1)
-    b == c || a==d -> (0)
-    c < a && b < d -> (b - a)
+    b == c || a == d -> (0)
+    c < a && b < d || a == c && b < d -> (b - a)
     a < c && b < d && b > a -> (b - c)
     a > c && a < d && b > d -> (d - a)
     else -> (d - c)
