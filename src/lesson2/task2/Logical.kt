@@ -32,38 +32,38 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
         x1 == x2 || y1 == y2 || x2 - x1 == y2 - y1 || x2 - x1 == -(y2 - y1) || -(x2 - x1) == y2 - y1
 
 
-    /**
-     * Средняя
-     *
-     * Проверить, лежит ли окружность с центром в (x1, y1) и радиусом r1 целиком внутри
-     * окружности с центром в (x2, y2) и радиусом r2.
-     * Вернуть true, если утверждение верно
-     */
-    fun circleInside(x1: Double, y1: Double, r1: Double,
-                     x2: Double, y2: Double, r2: Double): Boolean {
-        val X = x2 - x1
-        val Y = y2 - y1
-        val L = Math.sqrt(Math.pow(X, 2.0) + Math.pow(Y, 2.0))
-        return (r1 <= r2 - L)
-    }
+/**
+ * Средняя
+ *
+ * Проверить, лежит ли окружность с центром в (x1, y1) и радиусом r1 целиком внутри
+ * окружности с центром в (x2, y2) и радиусом r2.
+ * Вернуть true, если утверждение верно
+ */
+fun circleInside(x1: Double, y1: Double, r1: Double,
+                 x2: Double, y2: Double, r2: Double): Boolean {
+    val X = x2 - x1
+    val Y = y2 - y1
+    val L = Math.sqrt(Math.pow(X, 2.0) + Math.pow(Y, 2.0))
+    return (r1 <= r2 - L)
+}
 
-    /**
-     * Средняя
-     *
-     * Определить, пройдет ли кирпич со сторонами а, b, c сквозь прямоугольное отверстие в стене со сторонами r и s.
-     * Стороны отверстия должны быть параллельны граням кирпича.
-     * Считать, что совпадения длин сторон достаточно для прохождения кирпича, т.е., например,
-     * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
-     * Вернуть true, если кирпич пройдёт
-     */
-    fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean{
-        val mini=Math.min(a,b)
-        val Min=Math.min(c,mini)
-        val maxi=Math.max(a,b)
-        val Max=Math.max(c,maxi)
-        val H=a+b+c-Max-Min
-        val HMax =Math.max(r,s)
-        val HMin=Math.min(r,s)
-        return ((Min<=HMin)&&(H<=HMax))
-    }
+/**
+ * Средняя
+ *
+ * Определить, пройдет ли кирпич со сторонами а, b, c сквозь прямоугольное отверстие в стене со сторонами r и s.
+ * Стороны отверстия должны быть параллельны граням кирпича.
+ * Считать, что совпадения длин сторон достаточно для прохождения кирпича, т.е., например,
+ * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
+ * Вернуть true, если кирпич пройдёт
+ */
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    val mini = Math.min(a, b)
+    val Min = Math.min(c, mini)
+    val maxi = Math.max(a, b)
+    val Max = Math.max(c, maxi)
+    val H = a + b + c - Max - Min
+    val HMax = Math.max(r, s)
+    val HMin = Math.min(r, s)
+    return ((Min <= HMin) && (H <= HMax))
+}
 
