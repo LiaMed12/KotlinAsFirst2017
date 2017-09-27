@@ -1,7 +1,9 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
 import lesson4.task1.abs
 
 /**
@@ -34,10 +36,10 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String{
-    if (age%100 in 5..20) return "$age лет"
-    else if (age%10==1) return "$age год"
-    else if (age%10 in 2..4) return "$age года"
+fun ageDescription(age: Int): String {
+    if (age % 100 in 5..20) return "$age лет"
+    else if (age % 10 == 1) return "$age год"
+    else if (age % 10 in 2..4) return "$age года"
     else return "$age лет"
 
 }
@@ -60,12 +62,13 @@ fun timeForHalfWay(t1: Double, v1: Double,
         s1 == S -> t1
         s1 > S -> S / v1
         s2 + s1 == S -> t1 + t2
-        s2 + s1 > S -> t1 + (S-s1) / v2
+        s2 + s1 > S -> t1 + (S - s1) / v2
         s1 + s2 + s3 == S -> t1 + t2 + t3
-        else -> t1 + t2 + (S-s1-s2) / v3
+        else -> t1 + t2 + (S - s1 - s2) / v3
     }
 
 }
+
 /**
  * Простая
  *
@@ -84,7 +87,6 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
     else 2
 }
 
-
 /**
  * Простая
  *
@@ -98,11 +100,11 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    val X=bishopX-kingX
-    val Y=bishopY-kingY
-    return if (kingX!=rookX && kingY!=rookY && Math.abs(X)!=Math.abs(Y))0
-    else if ((kingX==rookX || kingY==rookY) && Math.abs(X)==Math.abs(Y))3
-    else if (kingX==rookX||kingY==rookY)1
+    val X = bishopX - kingX
+    val Y = bishopY - kingY
+    return if (kingX != rookX && kingY != rookY && Math.abs(X) != Math.abs(Y)) 0
+    else if ((kingX == rookX || kingY == rookY) && Math.abs(X) == Math.abs(Y)) 3
+    else if (kingX == rookX || kingY == rookY) 1
     else
         2
 }
@@ -115,8 +117,21 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int=TODO()
-
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    return when {
+        (a > (b + c)) || (b > (a + c)) || (c > (a + b)) -> (-1)
+        (Math.pow(a, 2.0) == Math.pow(b, 2.0) + Math.pow(c, 2.0)) ||
+                (Math.pow(b, 2.0) == Math.pow(c, 2.0) + Math.pow(a, 2.0)) ||
+                (Math.pow(a, 2.0) == Math.pow(b, 2.0) + Math.pow(c, 2.0)) -> (1)
+        (Math.pow(a, 2.0) > Math.pow(b, 2.0) + Math.pow(c, 2.0)) ||
+                (Math.pow(b, 2.0) > Math.pow(a, 2.0) + Math.pow(c, 2.0)) ||
+                (Math.pow(c, 2.0) > Math.pow(b, 2.0) + Math.pow(a, 2.0)) -> (2)
+        (Math.pow(a, 2.0) < Math.pow(b, 2.0) + Math.pow(c, 2.0)) ||
+                (Math.pow(a, 2.0) < Math.pow(b, 2.0) + Math.pow(c, 2.0)) ||
+                (Math.pow(a, 2.0) < Math.pow(b, 2.0) + Math.pow(c, 2.0)) -> (0)
+        else -> (-1)
+    }
+}
 
 /**
  * Средняя
@@ -126,4 +141,14 @@ fun triangleKind(a: Double, b: Double, c: Double): Int=TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    return when {
+        b < c -> (-1)
+        a > d -> (-1)
+        b == c -> (0)
+        c < a && b < d -> (b - a)
+        a < c && b < d && b > a -> (b - c)
+        a > c && a < d && b > d -> (d - a)
+        else -> (d - c)
+    }
+}
