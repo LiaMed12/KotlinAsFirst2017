@@ -40,7 +40,12 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
      * Вернуть true, если утверждение верно
      */
     fun circleInside(x1: Double, y1: Double, r1: Double,
-                     x2: Double, y2: Double, r2: Double): Boolean = TODO()
+                     x2: Double, y2: Double, r2: Double): Boolean {
+        val X = x2 - x1
+        val Y = y2 - y1
+        val L = Math.sqrt(Math.pow(X, 2.0) + Math.pow(Y, 2.0))
+        return (r1 <= r2 - L)
+    }
 
     /**
      * Средняя
@@ -51,5 +56,14 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
      * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
      * Вернуть true, если кирпич пройдёт
      */
-    fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+    fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean{
+        val mini=Math.min(a,b)
+        val Min=Math.min(c,mini)
+        val maxi=Math.max(a,b)
+        val Max=Math.max(c,maxi)
+        val H=a+b+c-Max-Min
+        val HMax =Math.max(r,s)
+        val HMin=Math.min(r,s)
+        return ((Min<=HMin)&&(H<=HMax))
+    }
 
