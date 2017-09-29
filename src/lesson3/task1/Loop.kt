@@ -66,7 +66,7 @@ fun digitNumber(n: Int): Int {
     var count = 0
     var number = n
     while (number != 0) {
-        count++
+        count += 1
         number /= 10
     }
     return count
