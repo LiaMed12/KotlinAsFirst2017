@@ -97,16 +97,23 @@ fun lcm(m: Int, n: Int): Int {
         multiplicity = Math.max(Maxi, Mini) - Math.min(Maxi, Mini)
     return multiplicity
 }
+
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    for (c in 2..n) {
-        if (n % c == 0) return c
+    var multiplicity = 0
+    for (i in 2..n) {
+        if ((n % i) == 0) {
+            multiplicity = i
+            break
+        }
     }
+    return multiplicity
 }
+
 /**
  * Простая
  *
