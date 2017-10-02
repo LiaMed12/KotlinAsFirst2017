@@ -100,8 +100,8 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var N=n
-    var M=m
+    var N = n
+    var M = m
     val prod = N * M
     return if (N == M) M
     else {
@@ -140,8 +140,8 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var MaxK = 1
-    for ( i in 1..n) {
-        if (n%i==0 && n!=i){
+    for (i in 1..n) {
+        if (n % i == 0 && n != i) {
             MaxK = i
         }
     }
@@ -157,12 +157,13 @@ fun maxDivisor(n: Int): Int {
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
     var CommonFactor = 0
-    for ( i in 2..n){
-          if (m%i==0 && n%i==0 && m!=n)
-              CommonFactor+=i
+    for (i in 2..n) {
+        if (m % i == 0 && n % i == 0 && m != n)
+            CommonFactor += i
     }
     return CommonFactor == 0
 }
+
 /**
  * Простая
  *
