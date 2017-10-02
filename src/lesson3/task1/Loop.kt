@@ -148,6 +148,7 @@ fun maxDivisor(n: Int): Int {
     return MaxK
 }
 
+
 /**
  * Простая
  *
