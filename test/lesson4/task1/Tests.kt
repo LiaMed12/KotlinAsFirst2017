@@ -83,6 +83,9 @@ class Tests {
         assertEquals(8.774964, abs(listOf(4.0, -5.0, 6.0)), 1e-5)
     }
 
+    private fun assertEquals(d: Double, abs: Boolean, d1: Double) {}
+
+
     @Test
     @Tag("Easy")
     fun mean() {
