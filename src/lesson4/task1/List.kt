@@ -126,7 +126,7 @@ fun mean(list: List<Double>): Double {
  * Если список пуст, не делать ничего. Вернуть изменённый список.
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
- */
+ */ 
 fun center(list: MutableList<Double>): MutableList<Double> = TODO()
 
 /**
