@@ -115,7 +115,7 @@ fun abs(v: List<Double>): Boolean = TODO()
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    if (list.size == 0) return 0.0
+    if (list.isEmpty()) return 0.0
     var k = 0
     var Summa = 0.0
     for (element in list) {
