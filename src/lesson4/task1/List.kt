@@ -116,15 +116,8 @@ fun abs(v: List<Double>): Boolean = TODO()
  */
 fun mean(list: List<Double>): Double {
     if (list.isEmpty()) return 0.0
-    var k = 0
-    var Summa = 0.0
-    for (element in list) {
-        k++
-        Summa += element
-    }
-    return Summa / k
+    else return list.sum() / list.size
 }
-
 /**
  * Средняя
  *
