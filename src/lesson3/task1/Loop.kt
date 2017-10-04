@@ -222,14 +222,14 @@ fun revert(n: Int): Int {
  * первая цифра равна последней, вторая -- предпоследней и так далее.
  * 15751 -- палиндром, 3653 -- нет.
  */
-fun isPalindrome(n: Int): Boolean = (revert(n)==n)
+fun isPalindrome(n: Int): Boolean = TODO()
 /**
  * Средняя
  *
  * Для заданного числа n определить, содержит ли оно различающиеся цифры.
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
-fun hasDifferentDigits(n: Int): Boolean = !(digitCountInNumber(n, (n % 10)) == digitNumber(n))
+fun hasDifferentDigits(n: Int): Boolean = TODO()
 
 /**
  * Сложная
