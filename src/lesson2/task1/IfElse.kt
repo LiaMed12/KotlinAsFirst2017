@@ -36,12 +36,10 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
-    if (age % 100 in 5..20) return "$age лет"
-    else if (age % 10 == 1) return "$age год"
-    else if (age % 10 in 2..4) return "$age года"
-    else return "$age лет"
-
+fun ageDescription(age: Int): String = when {
+    age % 10 ==1 && age%100 != 11 -> "$age год"
+    age % 10 in 2..4 && age%100>15 -> "$age года"
+    else -> "$age лет"
 }
 
 /**
@@ -54,17 +52,13 @@ fun ageDescription(age: Int): String {
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double): Double {
-    val S = (t1 * v1 + t2 * v2 + t3 * v3) / 2
-    val s1 = v1 * t1
-    val s2 = v2 * t2
-    val s3 = v3 * t3
+    val fullRoad = (t1 * v1 + t2 * v2 + t3 * v3) / 2
+    val road1 = v1 * t1
+    val road2 = v2 * t2
     return when {
-        s1 == S -> t1
-        s1 > S -> S / v1
-        s2 + s1 == S -> t1 + t2
-        s2 + s1 > S -> t1 + (S - s1) / v2
-        s1 + s2 + s3 == S -> t1 + t2 + t3
-        else -> t1 + t2 + (S - s1 - s2) / v3
+        road1 >= fullRoad -> fullRoad / v1
+        road2 + road1 >= fullRoad -> t1 + (fullRoad - road1) / v2
+        else -> t1 + t2 + (fullRoad - road1 - road2) / v3
     }
 
 }
@@ -81,10 +75,16 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
-    return if (rookX1 != kingX && rookY1 != kingY && rookX2 != kingX && rookY2 != kingY) 0
-    else if ((rookX1 == kingX || rookY1 == kingY) && (rookX2 == kingX || rookY2 == kingY)) 3
-    else if (rookX1 == kingX || rookY1 == kingY) 1
-    else 2
+    val equalityX = rookX1 == kingX
+    val equalityY = rookY1 == kingY
+    val equalityX2 = rookX2 == kingX
+    val equalityY2 = rookY2 == kingY
+    return when {
+        (!equalityX && !equalityY && !equalityX2 && !equalityY2) -> 0
+        (equalityX || equalityY) && (equalityX2 || equalityY2) -> 3
+        (equalityX || equalityY) -> 1
+        else -> 2
+    }
 }
 
 /**
@@ -99,16 +99,18 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  */
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int {
+                          bishopX: Int, bishopY: Int):Int {
     val X = bishopX - kingX
     val Y = bishopY - kingY
-    return if (kingX != rookX && kingY != rookY && Math.abs(X) != Math.abs(Y)) 0
-    else if ((kingX == rookX || kingY == rookY) && Math.abs(X) == Math.abs(Y)) 3
-    else if (kingX == rookX || kingY == rookY) 1
-    else
-        2
+    val equalityX = rookX == kingX
+    val equalityY = rookY == kingY
+    return when {
+        (!equalityX && !equalityY) && Math.abs(X) != Math.abs(Y) -> 0
+        ((equalityY|| equalityX) && Math.abs(X) == Math.abs(Y)) -> 3
+        (equalityX || equalityY) -> 1
+        else -> 2
+    }
 }
-
 /**
  * Простая
  *

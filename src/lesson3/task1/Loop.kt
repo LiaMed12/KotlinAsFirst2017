@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
 import java.lang.Math.*
 
 /**
@@ -194,12 +195,13 @@ fun sin(x: Double, eps: Double): Double {
     var sinX = xSpecial
     var Num: Double
     do {
-        i+=1
+        i += 1
         Num = Math.pow(-1.0, i.toDouble()) * Math.pow(xSpecial, i * 2.0 + 1) / factorial(i * 2 + 1)
         sinX += Num
     } while (Math.abs(Num) >= eps)
     return sinX
 }
+
 /**
  * Средняя
  *
@@ -243,7 +245,8 @@ fun revert(n: Int): Int {
  * первая цифра равна последней, вторая -- предпоследней и так далее.
  * 15751 -- палиндром, 3653 -- нет.
  */
-fun isPalindrome(n: Int): Boolean = (revert(n)==n)
+fun isPalindrome(n: Int): Boolean = (revert(n) == n)
+
 /**
  * Средняя
  *
@@ -259,8 +262,18 @@ fun hasDifferentDigits(n: Int): Boolean = !(digitCountInNumber(n, (n % 10)) == d
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
-
+fun squareSequenceDigit(n: Int): Int {
+    var number = 0
+    var i = 0
+    var result: Int
+    while (number < n) {
+        i++
+        number += digitNumber(i * i)
+    }
+    result = i * i
+    (n until number).forEach { result /= 10 }
+    return result % 10
+}
 
 /**
  * Сложная
@@ -269,4 +282,15 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var number = 0
+    var i = 0
+    var result: Int
+    while (number < n) {
+        i++
+        number += digitNumber(fib(i))
+    }
+    result = fib(i)
+    (n until number).forEach { result /= 10 }
+    return (result % 10)
+}
