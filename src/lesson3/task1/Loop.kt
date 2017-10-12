@@ -293,4 +293,4 @@ fun fibSequenceDigit(n: Int): Int {
     result = fib(i)
     (n until number).forEach { result /= 10 }
     return (result % 10)
-}
+} 
