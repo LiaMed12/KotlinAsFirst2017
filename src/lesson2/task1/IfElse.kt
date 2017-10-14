@@ -37,8 +37,8 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String = when {
-    age % 10 ==1 && age%100 != 11 -> "$age год"
-    age % 10 in 2..4 && age%100>15 -> "$age года"
+    age % 10 == 1 && age % 100 != 11 -> "$age год"
+    age % 10 in 2..4 && age % 100 > 15 -> "$age года"
     else -> "$age лет"
 }
 
@@ -99,18 +99,19 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  */
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int):Int {
+                          bishopX: Int, bishopY: Int): Int {
     val X = bishopX - kingX
     val Y = bishopY - kingY
     val equalityX = rookX == kingX
     val equalityY = rookY == kingY
     return when {
         (!equalityX && !equalityY) && Math.abs(X) != Math.abs(Y) -> 0
-        ((equalityY|| equalityX) && Math.abs(X) == Math.abs(Y)) -> 3
+        ((equalityY || equalityX) && Math.abs(X) == Math.abs(Y)) -> 3
         (equalityX || equalityY) -> 1
         else -> 2
     }
 }
+
 /**
  * Простая
  *
@@ -120,17 +121,18 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val list = listOf(a, b, c).sorted()
     return when {
-        (a > (b + c)) || (b > (a + c)) || (c > (a + b)) -> (-1)
-        (Math.pow(a, 2.0) == Math.pow(b, 2.0) + Math.pow(c, 2.0)) ||
-                (Math.pow(b, 2.0) == Math.pow(c, 2.0) + Math.pow(a, 2.0)) ||
-                (Math.pow(a, 2.0) == Math.pow(b, 2.0) + Math.pow(c, 2.0)) -> (1)
-        (Math.pow(a, 2.0) > Math.pow(b, 2.0) + Math.pow(c, 2.0)) ||
-                (Math.pow(b, 2.0) > Math.pow(a, 2.0) + Math.pow(c, 2.0)) ||
-                (Math.pow(c, 2.0) > Math.pow(b, 2.0) + Math.pow(a, 2.0)) -> (2)
-        (Math.pow(a, 2.0) < Math.pow(b, 2.0) + Math.pow(c, 2.0)) ||
-                (Math.pow(a, 2.0) < Math.pow(b, 2.0) + Math.pow(c, 2.0)) ||
-                (Math.pow(a, 2.0) < Math.pow(b, 2.0) + Math.pow(c, 2.0)) -> (0)
+        (list[2] > list[0] + list[1]) -> (-1)
+        (sqr(a) == sqr(b) + sqr(c)) ||
+                (sqr(b) == sqr(c) + sqr(a)) ||
+                (sqr(a) == sqr(b) + sqr(c)) -> (1)
+        (sqr(a) > sqr(b) + sqr(c)) ||
+                (sqr(b) > sqr(a) + sqr(c)) ||
+                (sqr(c) > sqr(b) + sqr(a)) -> (2)
+        (sqr(a) < sqr(b) + sqr(c)) ||
+                (sqr(a) < sqr(b) + sqr(c)) ||
+                (sqr(a) < sqr(b) + sqr(c)) -> (0)
         else -> (-1)
     }
 }
@@ -143,13 +145,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
-    b < c -> (-1)
-    a > d -> (-1)
-    b == c || a == d -> (0)
-    c < a && b < d || a == c && b < d || b == d && a > c -> (b - a)
-    a < c && b < d && b > a -> (b - c)
-    a > c && a < d && b > d -> (d - a)
-    a == b && a <= c && b <= d -> (1)
-    else -> (d - c)
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    if (b >= c && a <= c && b <= d) return b - c
+    else if (a <= d && c <= a && b >= d) return d - a
+    else if (a >= c && b <= d) return b - a
+    else if (a <= c && b >= d) return d - c
+    else return -1
 }
