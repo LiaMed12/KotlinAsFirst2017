@@ -52,13 +52,13 @@ fun ageDescription(age: Int): String = when {
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double): Double {
-    val fullRoad = (t1 * v1 + t2 * v2 + t3 * v3) / 2
-    val road1 = v1 * t1
-    val road2 = v2 * t2
+    val FirstHalfOfTheWay = (t1 * v1 + t2 * v2 + t3 * v3) / 2
+    val way1 = v1 * t1
+    val way2 = v2 * t2
     return when {
-        road1 >= fullRoad -> fullRoad / v1
-        road2 + road1 >= fullRoad -> t1 + (fullRoad - road1) / v2
-        else -> t1 + t2 + (fullRoad - road1 - road2) / v3
+        way1 >= FirstHalfOfTheWay -> FirstHalfOfTheWay / v1
+        way2 + way1 >= FirstHalfOfTheWay -> t1 + (FirstHalfOfTheWay - way1) / v2
+        else -> t1 + t2 + (FirstHalfOfTheWay - way1 - way2) / v3
     }
 
 }
@@ -75,14 +75,12 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
-    val equalityX = rookX1 == kingX
-    val equalityY = rookY1 == kingY
-    val equalityX2 = rookX2 == kingX
-    val equalityY2 = rookY2 == kingY
+    val equality = rookX1 == kingX || rookY1 == kingY
+    val equality2 = rookX2 == kingX || rookY2 == kingY
     return when {
-        (!equalityX && !equalityY && !equalityX2 && !equalityY2) -> 0
-        (equalityX || equalityY) && (equalityX2 || equalityY2) -> 3
-        (equalityX || equalityY) -> 1
+        (!equality && !equality2) -> 0
+        equality  && equality2 -> 3
+        equality -> 1
         else -> 2
     }
 }
@@ -102,12 +100,11 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           bishopX: Int, bishopY: Int): Int {
     val X = bishopX - kingX
     val Y = bishopY - kingY
-    val equalityX = rookX == kingX
-    val equalityY = rookY == kingY
+    val equalityX = rookX == kingX||rookY == kingY
     return when {
-        (!equalityX && !equalityY) && Math.abs(X) != Math.abs(Y) -> 0
-        ((equalityY || equalityX) && Math.abs(X) == Math.abs(Y)) -> 3
-        (equalityX || equalityY) -> 1
+        !equalityX && Math.abs(X) != Math.abs(Y) -> 0
+        equalityX && Math.abs(X) == Math.abs(Y) -> 3
+        equalityX  -> 1
         else -> 2
     }
 }
