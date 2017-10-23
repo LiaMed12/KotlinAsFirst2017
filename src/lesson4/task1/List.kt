@@ -222,11 +222,12 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    val list= mutableListOf<Int>()
+    val list = mutableListOf<Int>()
     var element = n
-    while (element>0){
-        list+=element%base
-        element/=base
+    if (element == 0) return listOf(0)
+    while (element > 0) {
+        list += element % base
+        element /= base
     }
     return list.reversed()
 }
@@ -239,7 +240,19 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    var substit = convert(n, base)
+    var listString = mutableListOf<String>()
+    var i = 87
+    for (k in 0 until substit.size) {
+        if (substit[k] > 9) {
+            listString.add((i + substit[k]).toChar().toString())
+        } else {
+            listString.add(substit[k].toString())
+        }
+    }
+    return listString.joinToString(separator = "")
+}
 
 /**
  * Средняя
