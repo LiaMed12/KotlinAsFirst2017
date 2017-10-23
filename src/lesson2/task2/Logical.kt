@@ -54,8 +54,10 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    val H = a + b + c - maxOf(a, b, c) - minOf(a, b, c)
-    val HMax = Math.max(r, s)
-    val HMin = Math.min(r, s)
-    return ((minOf(a, b, c) <= HMin) && (H <= HMax))
+    val minibricks = minOf(a, b, c)
+    val maxibricks = maxOf(a, b, c)
+    val middleElement = a + b + c - maxibricks - minibricks
+    val holeMax = Math.max(r, s)
+    val holeMin = Math.min(r, s)
+    return ((minibricks <= holeMin) && (middleElement <= holeMax))
 }

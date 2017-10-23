@@ -142,7 +142,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * Найти скалярное произведение двух векторов равной размерности,
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
- */ 
+ */
 fun times(a: List<Double>, b: List<Double>): Double {
     var C = 0.0
     for (i in 0 until a.size)
@@ -221,7 +221,15 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    val list= mutableListOf<Int>()
+    var element = n
+    while (element>0){
+        list+=element%base
+        element/=base
+    }
+    return list.reversed()
+}
 
 /**
  * Сложная

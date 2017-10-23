@@ -121,15 +121,9 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val list = listOf(a, b, c).sorted()
     return when {
         (list[2] > list[0] + list[1]) -> (-1)
-        (sqr(a) == sqr(b) + sqr(c)) ||
-                (sqr(b) == sqr(c) + sqr(a)) ||
-                (sqr(a) == sqr(b) + sqr(c)) -> (1)
-        (sqr(a) > sqr(b) + sqr(c)) ||
-                (sqr(b) > sqr(a) + sqr(c)) ||
-                (sqr(c) > sqr(b) + sqr(a)) -> (2)
-        (sqr(a) < sqr(b) + sqr(c)) ||
-                (sqr(a) < sqr(b) + sqr(c)) ||
-                (sqr(a) < sqr(b) + sqr(c)) -> (0)
+        (sqr(list[2]) == sqr(list[1])+ sqr(list[0])) -> (1)
+        (sqr(list[2]) > sqr(list[1]) + sqr(list[0])) -> (2)
+        (sqr(list[2]) < sqr(list[1]) + sqr(list[0])) -> (0)
         else -> (-1)
     }
 }
@@ -142,10 +136,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if (b >= c && a <= c && b <= d) return b - c
-    else if (a <= d && c <= a && b >= d) return d - a
-    else if (a >= c && b <= d) return b - a
-    else if (a <= c && b >= d) return d - c
-    else return -1
+fun segmentLength(a: Int, b: Int, c: Int, d: Int):Int {
+    return when {
+        (b >= c && a <= c && b <= d) -> b - c
+        (a <= d && c <= a && b >= d) -> d - a
+        (a >= c && b <= d) -> b - a
+        (a <= c && b >= d) -> d - c
+        else -> -1
+    }
 }
