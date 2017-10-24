@@ -249,7 +249,7 @@ fun convertToString(n: Int, base: Int): String {
             listString.add((constChar + substit[k]).toChar().toString())
         } else {
             listString.add(substit[k].toString())
-        }
+        } 
     }
     return listString.joinToString(separator = "")
 }
