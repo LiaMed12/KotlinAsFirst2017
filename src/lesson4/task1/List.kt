@@ -241,9 +241,9 @@ fun convert(n: Int, base: Int): List<Int> {
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
 fun convertToString(n: Int, base: Int): String {
-    var substit = convert(n, base)
-    var listString = mutableListOf<String>()
-    var constChar = 87
+    val substit = convert(n, base)
+    val listString = mutableListOf<String>()
+    val constChar = 87
     for (k in 0 until substit.size) {
         if (substit[k] > 9) {
             listString.add((constChar + substit[k]).toChar().toString())
