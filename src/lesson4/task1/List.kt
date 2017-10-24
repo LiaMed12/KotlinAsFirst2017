@@ -243,10 +243,10 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     var substit = convert(n, base)
     var listString = mutableListOf<String>()
-    var i = 87
+    var constChar = 87
     for (k in 0 until substit.size) {
         if (substit[k] > 9) {
-            listString.add((i + substit[k]).toChar().toString())
+            listString.add((constChar + substit[k]).toChar().toString())
         } else {
             listString.add(substit[k].toString())
         }
@@ -261,7 +261,14 @@ fun convertToString(n: Int, base: Int): String {
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    val list = digits.reversed()
+    var element = 0
+    for (i in 0 until list.size) {
+        element += list[i] * Math.pow(base.toDouble(), i.toDouble()).toInt()
+    }
+    return element
+}
 
 /**
  * Сложная
@@ -272,7 +279,21 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun convertSymbolsToNum(char: Char): Int {//Чтобы сделать код максимально понятным,
+// я написала для функции decimalFromString дополнительную функцию, которая позволит переводить Char в Int
+    val constLastChar = 87
+    val constStartChar = 48
+    return if (char in '0'..'9') char.toInt() - constStartChar
+    else char.toInt() - constLastChar
+}
+
+fun decimalFromString(str: String, base: Int): Int {
+    var list = listOf<Int>()
+    for (i in 0 until str.length) {
+        list += convertSymbolsToNum(str[i])
+    }
+    return decimal(list, base)
+}
 
 /**
  * Сложная
