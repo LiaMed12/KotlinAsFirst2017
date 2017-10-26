@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson5.task1
 
 /**
@@ -48,12 +49,10 @@ fun main(args: Array<String>) {
         val seconds = timeStrToSeconds(line)
         if (seconds == -1) {
             println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
-        }
-        else {
+        } else {
             println("Прошло секунд с начала суток: $seconds")
         }
-    }
-    else {
+    } else {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
     }
 }
@@ -67,20 +66,33 @@ fun main(args: Array<String>) {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateStrToDigit(str: String): String {
-    val time = str.split(" ")
-    val vremGod = listOf("января","февраля","марта","апреля","мая",
-            "июня","июля","августа","сентября","октября","ноября","декабря")
-    try{
-        var i = 12
-        while (vremGod[i]!=time[2]){
-            i--
-        }
-        return String.format("%02d:%02d:%02d", time[1],i,time[3])
-    }
-    catch (e: NumberFormatException){
+    val date = str.split(" ")
+    val montsYear = listOf("января", "февраля", "марта", "апреля", "мая",
+            "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    val day: String
+    val year: String
+    var month = ""
+    try {
+        if (date.size == 3)
+            if ((date[2].toInt() in Int.MIN_VALUE..Int.MAX_VALUE) && (date[0].toInt() in 1 until 31)) {
+                day = date[0]
+                year = date[2]
+                for (i in 0 until 12) {
+                    if (date[1] == montsYear[i]) {
+                        month = (i + 1).toString()
+                        break
+                    } else {
+                        if (i == 11) return ""
+                    }
+                }
+            } else return ""
+        else return ""
+    } catch (e: NumberFormatException) {
         return ""
     }
+    return String.format("%02d.%02d.%d", day.toInt(), month.toInt(), year.toInt())
 }
+
 /**
  * Средняя
  *
