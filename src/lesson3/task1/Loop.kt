@@ -82,17 +82,17 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var NumberFirst = 1
-    var NumberSecond = 1
-    var Sum = 1
+    var numberFirst = 1
+    var numberSecond = 1
+    var sum = 1
     var k = 2
     while (n > k) {
-        Sum = NumberFirst + NumberSecond
-        NumberFirst = NumberSecond
-        NumberSecond = Sum
+        sum = numberFirst + numberSecond
+        numberFirst = numberSecond
+        numberSecond = sum
         k += 1
     }
-    return Sum
+    return sum
 }
 
 
@@ -103,21 +103,15 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var N = n
-    var M = m
-    val prod = N * M
-    return if (N == M) M
-    else {
-        while (M != N) {
-            if (M > N) {
-                M -= N
-            } else {
-                N -= M
-            }
+    var multiplierN = n
+    var multiplierM = m
+    while (multiplierM != multiplierN) {
+        when {
+            multiplierM > multiplierN -> multiplierM -= multiplierN
+            multiplierN > multiplierM -> multiplierN -= multiplierM
         }
-
-        prod / M
     }
+    return n / multiplierM * m
 }
 
 /**
@@ -130,7 +124,7 @@ fun minDivisor(n: Int): Int {
     for (i in 2..n) {
         if ((n % i) == 0) {
             multiplicity = i
-            break
+            return multiplicity
         }
     }
     return multiplicity
@@ -142,15 +136,15 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var MaxK = 1
-    for (i in 1..n) {
+    var maxK = 0
+    for (i in n downTo 1 step 1) {
         if (n % i == 0 && n != i) {
-            MaxK = i
+            maxK = i
+            return maxK
         }
     }
-    return MaxK
+    return maxK
 }
-
 
 /**
  * Простая
@@ -159,14 +153,8 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    var CommonFactor = 0
-    for (i in 2..n) {
-        if (m % i == 0 && n % i == 0)
-            CommonFactor += i
-    }
-    return CommonFactor == 0
-}
+fun isCoPrime(m: Int, n: Int): Boolean = m*n == lcm(m,n)
+
 
 /**
  * Простая
@@ -175,12 +163,9 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean {
-    for (i in m..n) {
-        if (Math.sqrt(i.toDouble()) % 1 == 0.0) return true
-    }
-    return false
-}
+fun squareBetweenExists(m: Int, n: Int): Boolean = m<= sqr(Math.sqrt(n.toDouble()).toInt())
+
+fun sqr(x: Int): Int = x * x
 
 /**
  * Средняя
@@ -191,14 +176,15 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  */
 fun sin(x: Double, eps: Double): Double {
     var i = 0
-    val xSpecial = x % (2 * Math.PI)
-    var sinX = xSpecial
-    var Num: Double
+    val xNormal = x % (2 * Math.PI)
+    var sinX = xNormal
+    var num: Double
     do {
-        i += 1
-        Num = Math.pow(-1.0, i.toDouble()) * Math.pow(xSpecial, i * 2.0 + 1) / factorial(i * 2 + 1)
-        sinX += Num
-    } while (Math.abs(Num) >= eps)
+        i ++
+        val variable =  i * 2.0 + 1
+        num = Math.pow(-1.0, i.toDouble()) * Math.pow(xNormal,variable) / factorial( variable.toInt())
+        sinX += num
+    } while (Math.abs(num) >= eps)
     return sinX
 }
 
@@ -211,14 +197,15 @@ fun sin(x: Double, eps: Double): Double {
  */
 fun cos(x: Double, eps: Double): Double {
     var i = 0
-    val xSpecial = x % (2 * Math.PI)
+    val xNormal = x % (2 * Math.PI)
     var cosX = 1.0
-    var Num: Double
+    var num: Double
     do {
         i++
-        Num = Math.pow(-1.0, i.toDouble()) * (Math.pow(xSpecial, i * 2.0) / factorial(i * 2))
-        cosX += Num
-    } while (Math.abs(Num) >= eps)
+        val variable =  i * 2.0
+        num = Math.pow(-1.0, i.toDouble()) * (Math.pow(xNormal, variable) / factorial(variable.toInt()))
+        cosX += num
+    } while (Math.abs(num) >= eps)
     return cosX
 }
 
@@ -265,14 +252,14 @@ fun hasDifferentDigits(n: Int): Boolean = !(digitCountInNumber(n, (n % 10)) == d
 fun squareSequenceDigit(n: Int): Int {
     var number = 0
     var i = 0
-    var result: Int
+    var squareOfNumbers: Int
     while (number < n) {
         i++
-        number += digitNumber(i * i)
+        number += digitNumber(sqr(i))
     }
-    result = i * i
-    (n until number).forEach { result /= 10 }
-    return result % 10
+    squareOfNumbers = sqr(i)
+    (n until number).forEach {squareOfNumbers /= 10 }
+    return squareOfNumbers % 10
 }
 
 /**
@@ -285,12 +272,12 @@ fun squareSequenceDigit(n: Int): Int {
 fun fibSequenceDigit(n: Int): Int {
     var number = 0
     var i = 0
-    var result: Int
+    var fibOfNumbers: Int
     while (number < n) {
         i++
         number += digitNumber(fib(i))
     }
-    result = fib(i)
-    (n until number).forEach { result /= 10 }
-    return (result % 10)
+    fibOfNumbers = fib(i)
+    (n until number).forEach { fibOfNumbers /= 10 }
+    return (fibOfNumbers % 10)
 }

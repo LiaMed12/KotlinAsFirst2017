@@ -130,9 +130,9 @@ fun mean(list: List<Double>): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    val element = list.sum() / list.size
+    val average = list.sum() / list.size
     for (i in 0 until list.size)
-        list[i] -= element
+        list[i] -= average
     return list
 }
 
@@ -177,10 +177,8 @@ fun polynom(p: List<Double>, x: Double): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
-    var summ = 0.0
-    for (i in 0 until list.size) {
-        summ += list[i]
-        list[i] = summ
+    for (i in 1 until list.size) {
+        list[i] += list[i - 1]
     }
     return list
 }
@@ -244,11 +242,11 @@ fun convertToString(n: Int, base: Int): String {
     val substit = convert(n, base)
     val listString = mutableListOf<String>()
     val constChar = 87
-    for (k in 0 until substit.size) {
-        if (substit[k] > 9) {
-            listString.add((constChar + substit[k]).toChar().toString())
+    for (k in substit) {
+        if (k > 9) {
+            listString.add((constChar + k).toChar().toString())
         } else {
-            listString.add(substit[k].toString())
+            listString.add(k.toString())
         }
     }
     return listString.joinToString(separator = "")
@@ -264,8 +262,9 @@ fun convertToString(n: Int, base: Int): String {
 fun decimal(digits: List<Int>, base: Int): Int {
     val list = digits.reversed()
     var element = 0
+    val baseDouble = base.toDouble()
     for (i in 0 until list.size) {
-        element += list[i] * Math.pow(base.toDouble(), i.toDouble()).toInt()
+        element += list[i] * Math.pow(baseDouble, i.toDouble()).toInt()
     }
     return element
 }
@@ -279,20 +278,23 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun convertSymbolsToNum(char: Char): Int {//Чтобы сделать код максимально понятным,
-// я написала для функции decimalFromString дополнительную функцию, которая позволит переводить Char в Int
+fun decimalFromString(str: String, base: Int): Int {
+    var list = listOf<Int>()
+    for (i in str) {
+        list += convertSymbolsToNum(i)
+    }
+    return decimal(list, base)
+}
+
+/**Чтобы сделать код максимально понятным,
+ *я написала для функции decimalFromString дополнительную функцию,
+ * которая позволит переводить Char в Int
+ */
+fun convertSymbolsToNum(char: Char): Int {
     val constLastChar = 87
     val constStartChar = 48
     return if (char in '0'..'9') char.toInt() - constStartChar
     else char.toInt() - constLastChar
-}
-
-fun decimalFromString(str: String, base: Int): Int {
-    var list = listOf<Int>()
-    for (i in 0 until str.length) {
-        list += convertSymbolsToNum(str[i])
-    }
-    return decimal(list, base)
 }
 
 /**
