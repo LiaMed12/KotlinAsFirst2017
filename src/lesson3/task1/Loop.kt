@@ -153,7 +153,7 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = m*n == lcm(m,n)
+fun isCoPrime(m: Int, n: Int): Boolean = m * n == lcm(m, n)
 
 
 /**
@@ -163,7 +163,11 @@ fun isCoPrime(m: Int, n: Int): Boolean = m*n == lcm(m,n)
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = m<= sqr(Math.sqrt(n.toDouble()).toInt())
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+    var numb = Math.ceil(Math.sqrt(m.toDouble()))
+    if (sqr(numb) < m) numb++
+    return numb <= Math.sqrt(n.toDouble())
+}
 
 fun sqr(x: Int): Int = x * x
 
@@ -180,9 +184,9 @@ fun sin(x: Double, eps: Double): Double {
     var sinX = xNormal
     var num: Double
     do {
-        i ++
-        val variable =  i * 2.0 + 1
-        num = Math.pow(-1.0, i.toDouble()) * Math.pow(xNormal,variable) / factorial( variable.toInt())
+        i++
+        val variable = i * 2.0 + 1
+        num = Math.pow(-1.0, i.toDouble()) * Math.pow(xNormal, variable) / factorial(variable.toInt())
         sinX += num
     } while (Math.abs(num) >= eps)
     return sinX
@@ -202,7 +206,7 @@ fun cos(x: Double, eps: Double): Double {
     var num: Double
     do {
         i++
-        val variable =  i * 2.0
+        val variable = i * 2.0
         num = Math.pow(-1.0, i.toDouble()) * (Math.pow(xNormal, variable) / factorial(variable.toInt()))
         cosX += num
     } while (Math.abs(num) >= eps)
@@ -258,7 +262,7 @@ fun squareSequenceDigit(n: Int): Int {
         number += digitNumber(sqr(i))
     }
     squareOfNumbers = sqr(i)
-    (n until number).forEach {squareOfNumbers /= 10 }
+    (n until number).forEach { squareOfNumbers /= 10 }
     return squareOfNumbers % 10
 }
 

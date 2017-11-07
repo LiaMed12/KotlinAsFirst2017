@@ -69,28 +69,21 @@ fun dateStrToDigit(str: String): String {
     val date = str.split(" ")
     val montsYear = listOf("января", "февраля", "марта", "апреля", "мая",
             "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
-    val day: String
-    val year: String
-    var month = ""
     try {
-        if (date.size == 3)
-            if ((date[2].toInt() in Int.MIN_VALUE..Int.MAX_VALUE) && (date[0].toInt() in 1 until 31)) {
-                day = date[0]
-                year = date[2]
-                for (i in 0 until 12) {
-                    if (date[1] == montsYear[i]) {
-                        month = (i + 1).toString()
-                        break
-                    } else {
-                        if (i == 11) return ""
-                    }
+        if (date.size == 3) {
+            if (date[0].toInt() in 1..31) {
+                val day = date[0]
+                val year = date[2]
+                val month = montsYear.indexOf(date[1]) + 1
+                if (month == 0) {
+                    return ""
                 }
+                return String.format("%02d.%02d.%d", day.toInt(), month, year.toInt())
             } else return ""
-        else return ""
+        } else return ""
     } catch (e: NumberFormatException) {
         return ""
     }
-    return String.format("%02d.%02d.%d", day.toInt(), month.toInt(), year.toInt())
 }
 
 /**
@@ -104,12 +97,11 @@ fun dateDigitToStr(digital: String): String {
     val montsYear = listOf("января", "февраля", "марта", "апреля", "мая",
             "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
     val listString = digital.split(".")
-    var i =0
+    var i = 0
     try {
         if (listString.size == 3) {
-            if ((listString[0].toInt() in 1..31) && (listString[1].toInt() in 1..12)
-                    &&(listString[2].toInt() in Int.MIN_VALUE..Int.MAX_VALUE))  {
-                while (i!=listString[1].toInt()-1){
+            if ((listString[0].toInt() in 1..31) && (listString[1].toInt() in 1..12)) {
+                while (i != listString[1].toInt() - 1) {
                     i++
                 }
             } else return ""
@@ -117,8 +109,9 @@ fun dateDigitToStr(digital: String): String {
     } catch (e: NumberFormatException) {
         return ""
     }
-    return String.format("%d %s %d",listString[0].toInt(),montsYear[i],listString[2].toInt())
+    return String.format("%d %s %d", listString[0].toInt(), montsYear[i], listString[2].toInt())
 }
+
 /**
  * Средняя
  *
