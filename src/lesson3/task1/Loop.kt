@@ -163,11 +163,7 @@ fun isCoPrime(m: Int, n: Int): Boolean = m * n == lcm(m, n)
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var element = Math.ceil(Math.sqrt(m.toDouble()))
-    if (sqr(element) < m) element++
-    return element <= Math.sqrt(n.toDouble())
-}
+fun squareBetweenExists(m: Int, n: Int): Boolean = (0..sqrt(n.toDouble()).toInt()).any { it * it in m..n }
 
 fun sqr(x: Int): Int = x * x
 
@@ -256,14 +252,14 @@ fun hasDifferentDigits(n: Int): Boolean = !(digitCountInNumber(n, (n % 10)) == d
 fun squareSequenceDigit(n: Int): Int {
     var number = 0
     var i = 0
-    var squareOfNumbers: Int
+    var result = 0
     while (number < n) {
         i++
-        number += digitNumber(sqr(i))
+        number = sqr(i)
+        result += digitNumber(number)
     }
-    squareOfNumbers = sqr(i)
-    (n until number).forEach { squareOfNumbers /= 10 }
-    return squareOfNumbers % 10
+    (n until number).forEach { result /= 10 }
+    return result % 10
 }
 
 /**
@@ -276,12 +272,12 @@ fun squareSequenceDigit(n: Int): Int {
 fun fibSequenceDigit(n: Int): Int {
     var number = 0
     var i = 0
-    var fibOfNumbers: Int
+    var fibOfNumbers = 0
     while (number < n) {
         i++
-        number += digitNumber(fib(i))
+        fibOfNumbers = fib(i)
+        number += digitNumber(fibOfNumbers)
     }
-    fibOfNumbers = fib(i)
     (n until number).forEach { fibOfNumbers /= 10 }
     return (fibOfNumbers % 10)
 }
