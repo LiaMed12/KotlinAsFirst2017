@@ -252,11 +252,11 @@ fun hasDifferentDigits(n: Int): Boolean = !(digitCountInNumber(n, (n % 10)) == d
 fun squareSequenceDigit(n: Int): Int {
     var number = 0
     var i = 0
-    var result = 0
+    var result=0
     while (number < n) {
         i++
-        number = sqr(i)
-        result += digitNumber(number)
+        result = sqr(i)
+        number += digitNumber(result)
     }
     (n until number).forEach { result /= 10 }
     return result % 10
