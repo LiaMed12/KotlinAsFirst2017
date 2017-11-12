@@ -352,7 +352,7 @@ fun russian(n: Int): String {
                 result.add(0, discharge2[Num % 10])
             } else {
                 result.add(0, discharge1[Num % 10] + " " + "тысяч")
-                Num / 10
+                Num /= 10
             }
             4 -> result.add(0, discharge3[Num % 10])
         }
