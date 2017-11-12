@@ -131,7 +131,7 @@ fun dateDigitToStr(digital: String): String {
  */
 fun flattenPhoneNumber(phone: String): String {
     var answer = ""
-    val symbol = listOf(" ", "(", ")", "-","+")
+    val symbol = listOf(" ", "(", ")", "-", "+")
     if (phone.indexOf("+") != -1) {
         answer = "+"
     }
@@ -141,6 +141,9 @@ fun flattenPhoneNumber(phone: String): String {
         } else if (k.toString() !in symbol) {
             return ""
         }
+    }
+    if (phone.length in 0..1) {
+        return ""
     }
     return answer
 }
