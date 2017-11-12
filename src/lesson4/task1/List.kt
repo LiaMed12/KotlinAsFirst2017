@@ -4,6 +4,7 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import lesson3.task1.digitNumber
 import java.io.File.separator
 
 /**
@@ -314,4 +315,48 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val result = mutableListOf<String>()
+    var Num = n
+    val discharge = listOf("", "один", "два", "три", "четыре", "пять", "шесть",
+            "семь", "восемь", "девять")
+    val discharge1 = listOf("десять", "одинадцать", "двенадцать", "тринадцать",
+            "четырнадцать", "пятнадцать", "шестнадцать", "семнадцадь", "восемнадцать", "девятнадцать")
+    val discharge2 = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят",
+            "восемьдесят", "девяносто")
+    val discharge3 = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот",
+            "семьсот", "восемьсот", "девятьсот")
+    var count = 0
+    while (Num > 0) {
+        count++
+        when (count) {
+            1 -> if (Num % 100 in 10..19) {
+                result.add(0, discharge1[Num % 10])
+                Num /= 100
+            } else {
+                result.add(0, discharge[Num % 10])
+                Num /= 10
+                result.add(0, discharge2[Num % 10])
+            }
+            2 ->
+                result.add(0, discharge3[Num % 10])
+            3 -> if (Num % 100 !in 10..19) {
+                when {
+                    Num % 10 == 0 -> result.add(0, discharge[Num % 10] + "тысяч")
+                    Num % 10 == 1 -> result.add(0, "одна тысяча")
+                    Num % 10 == 2 -> result.add(0, "две тысячи")
+                    Num % 10 in 3..4 -> result.add(0, discharge[Num % 10] + " тысячи")
+                    Num % 10 in 5..9 -> result.add(0, discharge[Num % 10] + " тысяч")
+                }
+                Num /= 10
+                result.add(0, discharge2[Num % 10])
+            } else {
+                result.add(0, discharge1[Num % 10] + " " + "тысяч")
+                Num / 10
+            }
+            4 -> result.add(0, discharge3[Num % 10])
+        }
+        Num /= 10
+    }
+    return result.filter { it != "" }.joinToString(separator = " ")
+}
