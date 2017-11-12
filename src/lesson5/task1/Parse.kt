@@ -66,24 +66,29 @@ fun main(args: Array<String>) {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateStrToDigit(str: String): String {
-    val date = str.split(" ")
+    val parts = str.split(" ")
+    if (parts.size != 3) {
+        return ""
+    }
+    val (day, month, year) = monthFormatInNumber(str)
     val montsYear = listOf("января", "февраля", "марта", "апреля", "мая",
             "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
     try {
-        if (date.size == 3) {
-            if (date[0].toInt() in 1..31) {
-                val day = date[0]
-                val year = date[2]
-                val month = montsYear.indexOf(date[1]) + 1
-                if (month == 0) {
-                    return ""
-                }
-                return String.format("%02d.%02d.%d", day.toInt(), month, year.toInt())
-            } else return ""
+        if (day.toInt() in 1..31) {
+            val months = montsYear.indexOf(month)
+            if (months == -1) {
+                return ""
+            }
+            return String.format("%02d.%02d.%d", day.toInt(), months + 1, year.toInt())
         } else return ""
     } catch (e: NumberFormatException) {
         return ""
     }
+}
+
+fun monthFormatInNumber(str: String): Triple<String, String, String> {
+    val parts = str.split(" ")
+    return Triple(parts[0], parts[1], parts[2])
 }
 
 /**
@@ -124,7 +129,21 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    var answer = ""
+    val symbol = listOf(" ", "(", ")", "-","+")
+    if (phone.indexOf("+") != -1) {
+        answer = "+"
+    }
+    for (k in phone) {
+        if (k.toString() in "0".."9") {
+            answer += k
+        } else if (k.toString() !in symbol) {
+            return ""
+        }
+    }
+    return answer
+}
 
 /**
  * Средняя
