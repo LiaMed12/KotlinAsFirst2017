@@ -332,7 +332,7 @@ fun russian(n: Int): String {
         when (count) {
             1 -> if (Num % 100 in 10..19) {
                 result.add(0, discharge1[Num % 10])
-                Num /= 100
+                Num /= 10
             } else {
                 result.add(0, discharge[Num % 10])
                 Num /= 10
