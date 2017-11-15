@@ -191,7 +191,7 @@ fun plusMinus(expression: String): Int {
                 element -= StringSanitation[index + 1].toInt()
                 index+=2
             } else {
-                return throw IllegalAccessException()
+                throw IllegalAccessException()
             }
         }
         return element
