@@ -179,23 +179,24 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-        val StringSanitation = expression.split(" ")
-        var element = StringSanitation[0].toInt()
-        try {
-            var index = 1
-            while (index <= StringSanitation.size - 2) {
-                when {
-                    StringSanitation[index] == "+" -> element += StringSanitation[index + 1].toInt()
-                    StringSanitation[index] == "-" -> element -= StringSanitation[index + 1].toInt()
-                    else -> throw IllegalArgumentException()
-                }
-                index += 2
+    val StringSanitation = expression.split(" ")
+    try {
+        var result = StringSanitation[0].toInt()
+        var index = 1
+        while (index <= StringSanitation.size - 2) {
+            when {
+                StringSanitation[index] == "+" -> result += StringSanitation[index + 1].toInt()
+                StringSanitation[index] == "-" -> result -= StringSanitation[index + 1].toInt()
+                else -> throw IllegalArgumentException()
             }
-            return element
-        } catch (element: NumberFormatException) {
-            throw IllegalArgumentException()
+            index += 2
         }
+        return result
+    } catch (ans: NumberFormatException) {
+        throw IllegalArgumentException()
     }
+}
+
 /**
  * Сложная
  *
