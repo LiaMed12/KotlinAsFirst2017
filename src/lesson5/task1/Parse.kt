@@ -184,10 +184,12 @@ fun plusMinus(expression: String): Int {
         var result = StringSanitation[0].toInt()
         var index = 1
         while (index <= StringSanitation.size - 2) {
-            when {
-                StringSanitation[index] == "+" -> result += StringSanitation[index + 1].toInt()
-                StringSanitation[index] == "-" -> result -= StringSanitation[index + 1].toInt()
-                else -> throw IllegalArgumentException()
+            if (StringSanitation[index] == "+") {
+                result += StringSanitation[index + 1].toInt()
+            } else if (StringSanitation[index] == "-") {
+                result -= StringSanitation[index + 1].toInt()
+            } else {
+                throw IllegalArgumentException()
             }
             index += 2
         }
