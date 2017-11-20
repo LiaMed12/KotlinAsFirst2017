@@ -256,8 +256,8 @@ fun mostExpensive(description: String): String {
             }
         }
         return n
-    } catch (result: NumberFormatException) {
-        throw IllegalArgumentException()
+    } catch (e: NumberFormatException) {
+        return ""
     }
 }
 
