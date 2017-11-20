@@ -240,7 +240,26 @@ fun indexSearchInWord(index: Int, str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val product = (description.split("; "))
+    var maxprice = 0.0
+    var n = ""
+    try {
+        for (i in product) {
+            val priceAndProduct = i.split(" ")
+            if (priceAndProduct.size != 2) return ""
+            if (priceAndProduct[1].toDouble() > maxprice) {
+                maxprice = priceAndProduct[1].toDouble()
+                n = priceAndProduct[0]
+            } else if (priceAndProduct[1].toDouble() < 0) {
+                return ""
+            }
+        }
+        return n
+    } catch (result: NumberFormatException) {
+        throw IllegalArgumentException()
+    }
+}
 
 /**
  * Сложная
