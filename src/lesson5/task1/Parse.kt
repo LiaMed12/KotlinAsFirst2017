@@ -2,6 +2,9 @@
 
 package lesson5.task1
 
+import lesson4.task1.convertSymbolsToNum
+import lesson4.task1.convertToString
+
 /**
  * Пример
  *
@@ -65,30 +68,29 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
+val montsYear = listOf("января", "февраля", "марта", "апреля", "мая",
+        "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
     if (parts.size != 3) {
         return ""
     }
-    val (day, month, year) = monthFormatInNumber(str)
-    val montsYear = listOf("января", "февраля", "марта", "апреля", "мая",
-            "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    val (day, month, year) = parts
     try {
-        if (day.toInt() in 1..31) {
+        val days = day.toInt()
+        if (days in 1..31) {
             val months = montsYear.indexOf(month)
             if (months == -1) {
                 return ""
             }
-            return String.format("%02d.%02d.%d", day.toInt(), months + 1, year.toInt())
-        } else return ""
+            return String.format("%02d.%02d.%d", day, months + 1, year.toInt())
+        } else {
+            return ""
+        }
     } catch (e: NumberFormatException) {
         return ""
     }
-}
-
-fun monthFormatInNumber(str: String): Triple<String, String, String> {
-    val parts = str.split(" ")
-    return Triple(parts[0], parts[1], parts[2])
 }
 
 /**
@@ -99,22 +101,20 @@ fun monthFormatInNumber(str: String): Triple<String, String, String> {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String {
-    val montsYear = listOf("января", "февраля", "марта", "апреля", "мая",
-            "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
     val listString = digital.split(".")
-    var i = 0
+    if (listString.size != 3) {
+        return ""
+    }
     try {
-        if (listString.size == 3) {
-            if ((listString[0].toInt() in 1..31) && (listString[1].toInt() in 1..12)) {
-                while (i != listString[1].toInt() - 1) {
-                    i++
-                }
-            } else return ""
-        } else return ""
+        return if ((listString[0].toInt() in 1..31) && (listString[1].toInt() in 1..12)) {
+            val i = listString[1].toInt() - 1
+            String.format("%d %s %d", listString[0].toInt(), montsYear[i], listString[2].toInt())
+        } else {
+            ""
+        }
     } catch (e: NumberFormatException) {
         return ""
     }
-    return String.format("%d %s %d", listString[0].toInt(), montsYear[i], listString[2].toInt())
 }
 
 /**
@@ -130,19 +130,21 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    var answer = ""
+    val answer = StringBuilder()
     val symbol = listOf(" ", "(", ")", "-", "+")
     if (phone.indexOf("+") != -1) {
-        answer = "+"
+        answer.append("+")
     }
     for (k in phone) {
-        if (k.toString() in "0".."9") {
-            answer += k
+        if (k.toString() == "_") {
+            return ""
+        } else if (convertSymbolsToNum(k) in 0..9) {
+            answer.append(k)
         } else if (k.toString() !in symbol) {
             return ""
         }
     }
-    return answer
+    return "$answer"
 }
 
 /**
@@ -182,19 +184,17 @@ fun plusMinus(expression: String): Int {
     val StringSanitation = expression.split(" ")
     try {
         var result = StringSanitation[0].toInt()
-        var index = 1
-        while (index <= StringSanitation.size - 2) {
-            if (StringSanitation[index] == "+") {
-                result += StringSanitation[index + 1].toInt()
-            } else if (StringSanitation[index] == "-") {
-                result -= StringSanitation[index + 1].toInt()
+        for (i in 1 until StringSanitation.size step 2) {
+            if (StringSanitation[i] == "+" || StringSanitation[i] == "-") {
+                result += StringSanitation[i + 1].toInt()
+            } else if (StringSanitation[i] == "-") {
+                result += -1 * StringSanitation[i + 1].toInt()
             } else {
                 throw IllegalArgumentException()
             }
-            index += 2
         }
         return result
-    } catch (ans: NumberFormatException) {
+    } catch (result: NumberFormatException) {
         throw IllegalArgumentException()
     }
 }
