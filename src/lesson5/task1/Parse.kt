@@ -212,7 +212,7 @@ fun firstDuplicateIndex(str: String): Int {
         if (string[i] == string[i + 1])
             return indexSearchInWord(i, str)
     }
-    return -1
+    return 0
 }
 
 /**  Вспомогательная функция для предыдущей функции, считающая индексы в строке
