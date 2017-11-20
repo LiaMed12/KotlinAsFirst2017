@@ -247,12 +247,12 @@ fun mostExpensive(description: String): String {
     try {
         for (i in product) {
             val priceAndProduct = i.split(" ")
-            if (priceAndProduct.size != 2) return ""
+            if (priceAndProduct.size != 2) return "Any good with price 0.0"
             if (priceAndProduct[1].toDouble() > maxprice) {
                 maxprice = priceAndProduct[1].toDouble()
                 n = priceAndProduct[0]
             } else if (priceAndProduct[1].toDouble() < 0) {
-                return ""
+                return "Any good with price 0.0"
             }
         }
         return n
