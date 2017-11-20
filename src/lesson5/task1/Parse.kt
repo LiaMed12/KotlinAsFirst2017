@@ -84,7 +84,7 @@ fun dateStrToDigit(str: String): String {
             if (months == -1) {
                 return ""
             }
-            return String.format("%02d.%02d.%d", day, months + 1, year.toInt())
+            return String.format("%02d.%02d.%d", days, months + 1, year.toInt())
         } else {
             return ""
         }
@@ -136,9 +136,7 @@ fun flattenPhoneNumber(phone: String): String {
         answer.append("+")
     }
     for (k in phone) {
-        if (k.toString() == "_") {
-            return ""
-        } else if (convertSymbolsToNum(k) in 0..9) {
+        if (k.toString() in "0".."9") {
             answer.append(k)
         } else if (k.toString() !in symbol) {
             return ""
@@ -185,7 +183,7 @@ fun plusMinus(expression: String): Int {
     try {
         var result = StringSanitation[0].toInt()
         for (i in 1 until StringSanitation.size step 2) {
-            if (StringSanitation[i] == "+" || StringSanitation[i] == "-") {
+            if (StringSanitation[i] == "+") {
                 result += StringSanitation[i + 1].toInt()
             } else if (StringSanitation[i] == "-") {
                 result += -1 * StringSanitation[i + 1].toInt()
@@ -209,9 +207,9 @@ fun plusMinus(expression: String): Int {
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int {
-    val Strin = str.toLowerCase().split(" ")
-    for (i in 0 until Strin.size - 1) {
-        if (Strin[i] == Strin[i + 1])
+    val string = str.toLowerCase().split(" ")
+    for (i in 0 until string.size - 1) {
+        if (string[i] == string[i + 1])
             return indexSearchInWord(i, str)
     }
     return -1
