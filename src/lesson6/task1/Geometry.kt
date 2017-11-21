@@ -158,7 +158,7 @@ class Line private constructor(val b: Double, val angle: Double) {
      *
      * Найти точку пересечения с другой линией.
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
-     */ 
+     */
     fun crossPoint(other: Line): Point {
         val x: Double
         val y: Double
@@ -203,7 +203,7 @@ fun lineBySegment(s: Segment): Line {
     }
     return Line(s.begin, arctg)
 }
-
+ 
 /**
  * Средняя
  *
