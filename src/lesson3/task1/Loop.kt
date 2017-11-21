@@ -165,7 +165,6 @@ fun isCoPrime(m: Int, n: Int): Boolean = m * n == lcm(m, n)
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean = (0..sqrt(n.toDouble()).toInt()).any { it * it in m..n }
 
-fun sqr(x: Int): Int = x * x
 
 /**
  * Средняя
@@ -250,15 +249,18 @@ fun hasDifferentDigits(n: Int): Boolean = !(digitCountInNumber(n, (n % 10)) == d
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var number = 0
-    var i = 0
-    var result=0
-    while (number < n) {
+    var num = 0
+    var i = 1
+    var result = 0
+    while (num < n) {
+        result = i * i
+        num += digitNumber(result)
         i++
-        result = sqr(i)
-        number += digitNumber(result)
     }
-    (n until number).forEach { result /= 10 }
+    while (num > n) {
+        result /= 10
+        num--
+    }
     return result % 10
 }
 
@@ -278,6 +280,9 @@ fun fibSequenceDigit(n: Int): Int {
         fibOfNumbers = fib(i)
         number += digitNumber(fibOfNumbers)
     }
-    (n until number).forEach { fibOfNumbers /= 10 }
-    return (fibOfNumbers % 10)
+    while (number > n) {
+        fibOfNumbers /= 10
+        number--
+    }
+    return fibOfNumbers % 10
 }

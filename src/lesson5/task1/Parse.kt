@@ -241,7 +241,7 @@ fun indexSearchInWord(index: Int, str: String): Int {
  * Все цены должны быть положительными
  */
 fun mostExpensive(description: String): String {
-    var maxprice = 0.0
+    var maxPrice = 0.0
     var n = ""
     try {
         val parts = description.split(";")
@@ -249,8 +249,8 @@ fun mostExpensive(description: String): String {
             for (i in 0 until parts.size) {
                 val priceAndProduct  = parts[i].trim().split(" ")
                 val price = priceAndProduct [1].toDouble()
-                if (price >= maxprice) {
-                    maxprice = price
+                if (price >= maxPrice) {
+                    maxPrice = price
                     n = priceAndProduct [0]
                 }
             }
