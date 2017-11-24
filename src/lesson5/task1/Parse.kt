@@ -132,7 +132,7 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     val answer = StringBuilder()
     val symbol = listOf(" ", "(", ")", "-", "+")
-    if (phone.indexOf("+") != -1) {
+    if ((phone.indexOf("+") != -1)&&(phone.length>1)) {
         answer.append("+")
     }
     for (k in phone) {
@@ -141,6 +141,7 @@ fun flattenPhoneNumber(phone: String): String {
         } else if (k.toString() !in symbol) {
             return ""
         }
+
     }
     return "$answer"
 }
@@ -183,12 +184,11 @@ fun plusMinus(expression: String): Int {
     try {
         var result = StringSanitation[0].toInt()
         for (i in 1 until StringSanitation.size step 2) {
-            if (StringSanitation[i] == "+") {
-                result += StringSanitation[i + 1].toInt()
-            } else if (StringSanitation[i] == "-") {
-                result += -1 * StringSanitation[i + 1].toInt()
-            } else {
-                throw IllegalArgumentException()
+            val num = StringSanitation[i + 1].toInt()
+            result += when (StringSanitation[i]) {
+                "+" -> num
+                "-" -> -num
+                else -> throw IllegalArgumentException()
             }
         }
         return result
@@ -212,17 +212,17 @@ fun firstDuplicateIndex(str: String): Int {
         if (string[i] == string[i + 1])
             return indexSearchInWord(i, str)
     }
-    return 0
+    return -1
 }
 
 /**  Вспомогательная функция для предыдущей функции, считающая индексы в строке
  */
 fun indexSearchInWord(index: Int, str: String): Int {
-    var World = 0
+    var world = 0
     for (k in 0 until str.length) {
         if (str[k].toString() == " ") {
-            World++
-            if (World == index)
+            world++
+            if (world == index)
                 return k + 1
         }
     }
@@ -247,11 +247,11 @@ fun mostExpensive(description: String): String {
         val parts = description.split(";")
         try {
             for (i in 0 until parts.size) {
-                val priceAndProduct  = parts[i].trim().split(" ")
-                val price = priceAndProduct [1].toDouble()
+                val priceAndProduct = parts[i].trim().split(" ")
+                val price = priceAndProduct[1].toDouble()
                 if (price >= maxPrice) {
                     maxPrice = price
-                    n = priceAndProduct [0]
+                    n = priceAndProduct[0]
                 }
             }
             return n

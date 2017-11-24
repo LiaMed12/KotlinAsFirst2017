@@ -203,7 +203,7 @@ fun lineBySegment(s: Segment): Line {
     }
     return Line(s.begin, arctg)
 }
- 
+
 /**
  * Средняя
  *

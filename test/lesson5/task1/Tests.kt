@@ -53,7 +53,7 @@ class Tests {
     @Test
     @Tag("Normal")
     fun flattenPhoneNumber() {
-        assertEquals("+79211234567", flattenPhoneNumber("+7 (921) 123-45-67"))
+        assertEquals("", flattenPhoneNumber("+"))
         assertEquals("123456798", flattenPhoneNumber("12 --  34- 5 -- 67 -98"))
         assertEquals("", flattenPhoneNumber("ab-123"))
         assertEquals("+12345", flattenPhoneNumber("+12 (3) 4-5"))
@@ -90,7 +90,7 @@ class Tests {
     @Test
     @Tag("Hard")
     fun firstDuplicateIndex() {
-        assertEquals(-1, firstDuplicateIndex("Привет"))
+        assertEquals(-1, firstDuplicateIndex("           "))
         assertEquals(9, firstDuplicateIndex("Он пошёл в в школу"))
         assertEquals(40, firstDuplicateIndex("Яблоко упало на ветку с ветки оно упало на на землю"))
         assertEquals(9, firstDuplicateIndex("Мы пошли прямо Прямо располагался магазин"))
