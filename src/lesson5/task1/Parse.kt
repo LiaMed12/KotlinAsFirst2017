@@ -131,19 +131,19 @@ fun dateDigitToStr(digital: String): String {
  */
 fun flattenPhoneNumber(phone: String): String {
     val answer = StringBuilder()
-    val symbol = listOf(" ", "(", ")", "-", "+")
-    if ((phone.indexOf("+") != -1)&&(phone.length>1)) {
+    val symbol = listOf(' ', '(', ')', '-', '+')
+    if ((phone.indexOf("+") != -1) && (phone.length > 1)) {
         answer.append("+")
     }
     for (k in phone) {
-        if (k.toString() in "0".."9") {
+        if (k in '0'..'9') {
             answer.append(k)
-        } else if (k.toString() !in symbol) {
+        } else if (k !in symbol) {
             return ""
         }
 
     }
-    return "$answer"
+    return answer.toString()
 }
 
 /**
@@ -206,28 +206,7 @@ fun plusMinus(expression: String): Int {
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int {
-    val string = str.toLowerCase().split(" ")
-    for (i in 0 until string.size - 1) {
-        if (string[i] == string[i + 1])
-            return indexSearchInWord(i, str)
-    }
-    return -1
-}
-
-/**  Вспомогательная функция для предыдущей функции, считающая индексы в строке
- */
-fun indexSearchInWord(index: Int, str: String): Int {
-    var world = 0
-    for (k in 0 until str.length) {
-        if (str[k].toString() == " ") {
-            world++
-            if (world == index)
-                return k + 1
-        }
-    }
-    return -1
-}
+fun firstDuplicateIndex(str: String): Nothing = TODO()
 
 /**
  * Сложная

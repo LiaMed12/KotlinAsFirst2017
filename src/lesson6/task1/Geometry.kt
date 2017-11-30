@@ -195,10 +195,7 @@ class Line private constructor(val b: Double, val angle: Double) {
  */
 fun lineBySegment(s: Segment): Line {
     var arctg = Math.atan2((s.end.y - s.begin.y), (s.end.x - s.begin.x))
-    if (arctg < 0) {
-        arctg += Math.PI
-    }
-    if (arctg > Math.PI) {
+    if (arctg < 0||arctg > Math.PI) {
         arctg += Math.PI
     }
     return Line(s.begin, arctg)
