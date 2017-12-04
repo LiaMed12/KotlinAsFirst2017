@@ -119,8 +119,9 @@ fun diameter(vararg points: Point): Segment {
     val size = points.size
     for (i in 0 until size) {
         for (k in i + 1 until size) {
-            if (maximDistance < points[i].distance(points[k])) {
-                maximDistance = points[i].distance(points[k])
+            val distancePoints = points[i].distance(points[k])
+            if (maximDistance < distancePoints) {
+                maximDistance = distancePoints
                 mPoint = Pair(i, k)
             }
         }
@@ -195,7 +196,7 @@ class Line private constructor(val b: Double, val angle: Double) {
  */
 fun lineBySegment(s: Segment): Line {
     var arctg = Math.atan2((s.end.y - s.begin.y), (s.end.x - s.begin.x))
-    if (arctg < 0||arctg > Math.PI) {
+    if (arctg < 0 || arctg > Math.PI) {
         arctg += Math.PI
     }
     return Line(s.begin, arctg)
@@ -216,7 +217,7 @@ fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
 fun bisectorByPoints(a: Point, b: Point): Line {
     val middle = Point((a.x + b.x) / 2, (a.y + b.y) / 2)
     var slope = lineByPoints(a, b).angle
-    if (slope + Math.PI / 2 >= Math.PI) {
+    if (slope >= Math.PI / 2) {
         slope -= Math.PI / 2
     } else {
         slope += Math.PI / 2
@@ -242,8 +243,8 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
 fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
-    val lineSegmentAB= bisectorByPoints(a, b)
-    val lineSegmentBC= bisectorByPoints(b, c)
+    val lineSegmentAB = bisectorByPoints(a, b)
+    val lineSegmentBC = bisectorByPoints(b, c)
     val center = lineSegmentAB.crossPoint(lineSegmentBC)
     val radius = center.distance(a)
     return Circle(center, radius)

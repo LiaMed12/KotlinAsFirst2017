@@ -80,11 +80,11 @@ fun dateStrToDigit(str: String): String {
     try {
         val days = day.toInt()
         if (days in 1..31) {
-            val months = montsYear.indexOf(month)
-            if (months == -1) {
+            val monthIndex = montsYear.indexOf(month)
+            if (monthIndex == -1) {
                 return ""
             }
-            return String.format("%02d.%02d.%d", days, months + 1, year.toInt())
+            return String.format("%02d.%02d.%d", days, monthIndex + 1, year.toInt())
         } else {
             return ""
         }
@@ -101,14 +101,14 @@ fun dateStrToDigit(str: String): String {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String {
-    val listString = digital.split(".")
-    if (listString.size != 3) {
+    val stringFormat= digital.split(".")
+    if (stringFormat.size != 3) {
         return ""
     }
     try {
-        return if ((listString[0].toInt() in 1..31) && (listString[1].toInt() in 1..12)) {
-            val i = listString[1].toInt() - 1
-            String.format("%d %s %d", listString[0].toInt(), montsYear[i], listString[2].toInt())
+        return if ((stringFormat[0].toInt() in 1..31) && (stringFormat[1].toInt() in 1..12)) {
+            val i = stringFormat[1].toInt() - 1
+            String.format("%d %s %d", stringFormat[0].toInt(), montsYear[i], stringFormat[2].toInt())
         } else {
             ""
         }
