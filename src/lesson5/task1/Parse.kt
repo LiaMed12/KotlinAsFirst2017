@@ -101,7 +101,7 @@ fun dateStrToDigit(str: String): String {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String {
-    val stringFormat= digital.split(".")
+    val stringFormat = digital.split(".")
     if (stringFormat.size != 3) {
         return ""
     }

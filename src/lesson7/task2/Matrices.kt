@@ -1,7 +1,9 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson7.task2
 
 import lesson7.task1.Matrix
+import lesson7.task1.MatrixImpl
 import lesson7.task1.createMatrix
 
 // Все задачи в этом файле требуют наличия реализации интерфейса "Матрица" в Matrix.kt
@@ -59,7 +61,41 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSpiral(height: Int, width: Int): Matrix<Int> {
+    var right = width - 1
+    var down = height - 1
+    var left = 0
+    var up = 0
+    var element = 1
+    var goOver = 0
+    val matrix = MatrixImpl(height, width, 1)
+    while (left <= right && up <= down) {
+        when (goOver) {
+            0 -> {
+                for (i in left..right)
+                    matrix[up, i] = element++
+                up++
+            }
+            1 -> {
+                for (i in up..down)
+                    matrix[i, right] = element++
+                right--
+            }
+            2 -> {
+                for (i in right downTo left)
+                    matrix[down, i] = element++
+                down--
+            }
+            3 -> {
+                for (i in down downTo up)
+                    matrix[i, left] = element++
+                left++
+            }
+        }
+        goOver++
+    }
+    return matrix
+}
 
 /**
  * Сложная
@@ -90,7 +126,22 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
  * 10 13 16 18
  * 14 17 19 20
  */
-fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSnake(height: Int, width: Int): Matrix<Int> {
+    var x = 0
+    var y = 0
+    var element = 1
+    val matrix = MatrixImpl(height, width, 1)
+    while (y < height + width) {
+        var i = Math.min(x, width - 1)
+        var k = Math.max(0, x - width + 1)
+        while (i >= 0 && k <= Math.min(y, height - 1)) {
+            matrix[k++, i--] = element++
+        }
+        x++
+        y++
+    }
+    return matrix
+}
 
 /**
  * Средняя
