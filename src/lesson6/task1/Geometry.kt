@@ -114,7 +114,7 @@ fun diameter(vararg points: Point): Segment {
     if (points.size < 2) {
         throw IllegalArgumentException()
     }
-    var mPoint = Pair(0, 0)
+    var seg = Segment(Point(0.0, 0.0), Point(0.0, 0.0))
     var maximDistance = 0.0
     val size = points.size
     for (i in 0 until size) {
@@ -122,11 +122,11 @@ fun diameter(vararg points: Point): Segment {
             val distancePoints = points[i].distance(points[k])
             if (maximDistance < distancePoints) {
                 maximDistance = distancePoints
-                mPoint = Pair(i, k)
+                seg = Segment(points[i], points[k])
             }
         }
     }
-    return Segment(points[mPoint.first], points[mPoint.second])
+    return seg
 }
 
 /**
