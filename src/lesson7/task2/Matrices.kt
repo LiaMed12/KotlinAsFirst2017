@@ -92,7 +92,7 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
                 left++
             }
         }
-        goOver = (goOver++) % 4
+        goOver = (goOver + 1) % 4
     }
     return matrix
 }
