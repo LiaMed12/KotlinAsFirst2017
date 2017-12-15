@@ -56,7 +56,7 @@ fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> {
 class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : Matrix<E> {
     private val list = mutableListOf<E>()
     init {
-        for (i in 0..height * width) run {
+        for (i in 0 until height * width) {
             list.add(e)
         }
     }
@@ -85,11 +85,11 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
         val answer = StringBuilder()
         for (i in 0 until height) {
             for (k in 0 until width) {
-                answer.append(this[i, k])
+                answer.append(this[i, k]," ")
             }
             answer.append("\t")
         }
-        return "$answer"
+        return answer.toString()
     }
 }
 
